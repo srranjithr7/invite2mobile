@@ -1377,3 +1377,71 @@ body.rsvpLocked{overflow:hidden;}
 .rsvpSubmit {
   min-width: 210px !important;
 }
+
+
+/* === v30060: RSVP counts, duplicate prevention, submission time === */
+.rsvpSummary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 20px 0 0;
+}
+
+.rsvpSummary div {
+  padding: 12px 8px;
+  border-radius: 16px;
+  background: rgba(255,255,255,.34);
+  border: 1px solid rgba(139,106,54,.22);
+}
+
+.rsvpSummary strong {
+  display: block;
+  font-family: "Nunito Sans", Inter, Arial, sans-serif;
+  font-size: 1.75rem;
+  line-height: 1;
+  font-weight: 900;
+  color: var(--deep);
+}
+
+.rsvpSummary span {
+  display: block;
+  margin-top: 6px;
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  font-weight: 900;
+  color: var(--accent);
+}
+
+.rsvpDuplicateNote {
+  margin-top: 14px;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.rsvpSubmittedTime {
+  font-size: 12px;
+  font-weight: 800 !important;
+  color: var(--accent) !important;
+  letter-spacing: .06em;
+}
+
+.rsvpSubmit[disabled] {
+  opacity: .55;
+  cursor: not-allowed;
+}
+
+@media (max-width: 420px) {
+  .rsvpSummary {
+    gap: 7px;
+  }
+
+  .rsvpSummary strong {
+    font-size: 1.45rem;
+  }
+
+  .rsvpSummary span {
+    font-size: 9px;
+  }
+}

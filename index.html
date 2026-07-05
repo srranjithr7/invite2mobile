@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Inter:wght@300;400;500;600;700&family=Nunito+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=30050" />
+  <link rel="stylesheet" href="style.css?v=30060" />
 </head>
 <body>
   <div class="cover" id="cover" aria-label="Invitation cover">
@@ -126,6 +126,13 @@
 
             <button class="primaryBtn rsvpSubmit" type="submit">Send Response</button>
           </form>
+
+          <div class="rsvpSummary" id="rsvpSummary" aria-label="RSVP response summary">
+            <div><strong id="rsvpYesCount">0</strong><span>Yes</span></div>
+            <div><strong id="rsvpNoCount">0</strong><span>No</span></div>
+            <div><strong id="rsvpMaybeCount">0</strong><span>Not Sure</span></div>
+          </div>
+          <p class="rsvpDuplicateNote" id="rsvpDuplicateNote" hidden>You have already submitted from this device.</p>
         </div>
 
         <div class="rsvpThanksView" id="rsvpThanksView" hidden>
@@ -133,6 +140,7 @@
           <h2>Thank You ❤️</h2>
           <p>Your response has been received.</p>
           <p>Your presence means a lot to us.</p>
+          <p class="rsvpSubmittedTime" id="rsvpSubmittedTime"></p>
           <button class="primaryBtn" type="button" data-close-rsvp>Close</button>
         </div>
       </div>
@@ -141,6 +149,6 @@
   </main>
 
   <footer>Ranjith Rajagopal &amp; Sonaaly Sudharsanaa</footer>
-  <script src="script.js?v=30050"></script>
+  <script src="script.js?v=30060"></script>
 </body>
 </html>

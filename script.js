@@ -168,23 +168,71 @@
   window.finishReveal = finishReveal;
 })();
 
-
-/* RSVP popup - in-page only */
+/* RSVP popup - counts, duplicate prevention, submission time */
 document.addEventListener("DOMContentLoaded", () => {
   const modal = document.getElementById("rsvpModal");
   const openBtn = document.getElementById("openRsvpModal");
   const form = document.getElementById("rsvpForm");
   const formView = document.getElementById("rsvpFormView");
   const thanksView = document.getElementById("rsvpThanksView");
+  const duplicateNote = document.getElementById("rsvpDuplicateNote");
+  const submittedTime = document.getElementById("rsvpSubmittedTime");
+
+  const yesCount = document.getElementById("rsvpYesCount");
+  const noCount = document.getElementById("rsvpNoCount");
+  const maybeCount = document.getElementById("rsvpMaybeCount");
+
+  function getResponses() {
+    try {
+      return JSON.parse(localStorage.getItem("weddingRsvps") || "[]");
+    } catch {
+      return [];
+    }
+  }
+
+  function hasSubmittedFromThisDevice() {
+    return localStorage.getItem("weddingRsvpSubmitted") === "true";
+  }
+
+  function updateRsvpCounts() {
+    const responses = getResponses();
+    const counts = { yes: 0, no: 0, maybe: 0 };
+
+    responses.forEach((item) => {
+      const value = (item.attendance || "").toLowerCase();
+      if (value.includes("yes")) counts.yes += 1;
+      else if (value.includes("not sure")) counts.maybe += 1;
+      else if (value.includes("no")) counts.no += 1;
+    });
+
+    if (yesCount) yesCount.textContent = counts.yes;
+    if (noCount) noCount.textContent = counts.no;
+    if (maybeCount) maybeCount.textContent = counts.maybe;
+  }
+
+  function setDuplicateState() {
+    const submitted = hasSubmittedFromThisDevice();
+    const submitBtn = form?.querySelector(".rsvpSubmit");
+
+    if (duplicateNote) duplicateNote.hidden = !submitted;
+    if (submitBtn) {
+      submitBtn.disabled = submitted;
+      submitBtn.textContent = submitted ? "Already Submitted" : "Send Response";
+    }
+  }
 
   function openRsvp() {
     if (!modal) return;
+    updateRsvpCounts();
+    setDuplicateState();
     modal.classList.add("open");
     modal.setAttribute("aria-hidden", "false");
     document.body.classList.add("rsvpLocked");
     if (formView) formView.hidden = false;
     if (thanksView) thanksView.hidden = true;
-    setTimeout(() => document.getElementById("guestName")?.focus(), 120);
+    setTimeout(() => {
+      if (!hasSubmittedFromThisDevice()) document.getElementById("guestName")?.focus();
+    }, 120);
   }
 
   function closeRsvp() {
@@ -196,6 +244,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (openBtn) openBtn.addEventListener("click", openRsvp);
   document.querySelectorAll("[data-close-rsvp]").forEach((item) => item.addEventListener("click", closeRsvp));
+
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && modal?.classList.contains("open")) closeRsvp();
   });
@@ -203,24 +252,51 @@ document.addEventListener("DOMContentLoaded", () => {
   if (form) {
     form.addEventListener("submit", (event) => {
       event.preventDefault();
+
+      if (hasSubmittedFromThisDevice()) {
+        setDuplicateState();
+        return;
+      }
+
       const submitBtn = form.querySelector(".rsvpSubmit");
       const name = document.getElementById("guestName")?.value.trim();
       const attendance = form.querySelector('input[name="attendance"]:checked')?.value;
+
       if (!name || !attendance) return;
 
-      const response = { name, attendance, submittedAt: new Date().toISOString() };
-      const existing = JSON.parse(localStorage.getItem("weddingRsvps") || "[]");
+      const now = new Date();
+      const response = {
+        name,
+        attendance,
+        submittedAt: now.toISOString(),
+        submittedAtDisplay: now.toLocaleString()
+      };
+
+      const existing = getResponses();
       existing.push(response);
       localStorage.setItem("weddingRsvps", JSON.stringify(existing));
+      localStorage.setItem("weddingRsvpSubmitted", "true");
 
-      if (submitBtn) { submitBtn.classList.add("loading"); submitBtn.textContent = "Sending..."; }
+      updateRsvpCounts();
+
+      if (submitBtn) {
+        submitBtn.classList.add("loading");
+        submitBtn.textContent = "Sending...";
+      }
 
       setTimeout(() => {
+        if (submittedTime) submittedTime.textContent = "Submitted: " + response.submittedAtDisplay;
         if (formView) formView.hidden = true;
         if (thanksView) thanksView.hidden = false;
         form.reset();
-        if (submitBtn) { submitBtn.classList.remove("loading"); submitBtn.textContent = "Send Response"; }
+        if (submitBtn) {
+          submitBtn.classList.remove("loading");
+          submitBtn.disabled = true;
+          submitBtn.textContent = "Already Submitted";
+        }
       }, 650);
     });
   }
+
+  updateRsvpCounts();
 });

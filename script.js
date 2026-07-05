@@ -168,8 +168,10 @@
   window.finishReveal = finishReveal;
 })();
 
-/* RSVP popup - counts, duplicate prevention, submission time */
+/* RSVP popup - Google Sheet submission, counts, duplicate prevention, submission time */
 document.addEventListener("DOMContentLoaded", () => {
+  const RSVP_ENDPOINT = "https://script.google.com/macros/s/AKfycbzY9aNDRp4SMArkPDgAVMgvN9BLGt2CVyB4XAfKBTqcSSwZtqrLqlMiuTBSHGwzUNEz9w/exec";
+
   const modal = document.getElementById("rsvpModal");
   const openBtn = document.getElementById("openRsvpModal");
   const form = document.getElementById("rsvpForm");
@@ -242,6 +244,17 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.classList.remove("rsvpLocked");
   }
 
+  async function sendToGoogleSheet(response) {
+    await fetch(RSVP_ENDPOINT, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify(response)
+    });
+  }
+
   if (openBtn) openBtn.addEventListener("click", openRsvp);
   document.querySelectorAll("[data-close-rsvp]").forEach((item) => item.addEventListener("click", closeRsvp));
 
@@ -250,7 +263,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   if (form) {
-    form.addEventListener("submit", (event) => {
+    form.addEventListener("submit", async (event) => {
       event.preventDefault();
 
       if (hasSubmittedFromThisDevice()) {
@@ -269,32 +282,44 @@ document.addEventListener("DOMContentLoaded", () => {
         name,
         attendance,
         submittedAt: now.toISOString(),
-        submittedAtDisplay: now.toLocaleString()
+        submittedAtDisplay: now.toLocaleString(),
+        device: navigator.userAgent
       };
-
-      const existing = getResponses();
-      existing.push(response);
-      localStorage.setItem("weddingRsvps", JSON.stringify(existing));
-      localStorage.setItem("weddingRsvpSubmitted", "true");
-
-      updateRsvpCounts();
 
       if (submitBtn) {
         submitBtn.classList.add("loading");
+        submitBtn.disabled = true;
         submitBtn.textContent = "Sending...";
       }
 
-      setTimeout(() => {
+      try {
+        await sendToGoogleSheet(response);
+
+        const existing = getResponses();
+        existing.push(response);
+        localStorage.setItem("weddingRsvps", JSON.stringify(existing));
+        localStorage.setItem("weddingRsvpSubmitted", "true");
+
+        updateRsvpCounts();
+
         if (submittedTime) submittedTime.textContent = "Submitted: " + response.submittedAtDisplay;
         if (formView) formView.hidden = true;
         if (thanksView) thanksView.hidden = false;
         form.reset();
+
         if (submitBtn) {
           submitBtn.classList.remove("loading");
           submitBtn.disabled = true;
           submitBtn.textContent = "Already Submitted";
         }
-      }, 650);
+      } catch (error) {
+        if (submitBtn) {
+          submitBtn.classList.remove("loading");
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Send Response";
+        }
+        alert("Submission failed. Please try again.");
+      }
     });
   }
 

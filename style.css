@@ -1349,3 +1349,31 @@ footer { padding:32px 20px 42px; text-align:center; color:var(--soft); letter-sp
 @keyframes rsvpPop{from{opacity:0;transform:translateY(18px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
 body.rsvpLocked{overflow:hidden;}
 @media(max-width:480px){.rsvpModal{padding:16px}.rsvpModalCard{padding:32px 18px 26px;border-radius:26px}.rsvpOptions label{font-size:14px}}
+
+
+/* === v30050: softer presence wording layout === */
+.rsvpCard .sectionTitle {
+  font-size: clamp(3.4rem, 11vw, 6.4rem) !important;
+}
+
+.rsvpCard p:not(.eyebrow) {
+  max-width: 520px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  font-weight: 700 !important;
+  line-height: 1.7 !important;
+}
+
+.rsvpModalCard h2#rsvpModalTitle {
+  font-size: clamp(2.65rem, 9vw, 4.6rem) !important;
+  line-height: .95 !important;
+  margin-bottom: 26px !important;
+}
+
+.rsvpOptions p {
+  letter-spacing: .12em !important;
+}
+
+.rsvpSubmit {
+  min-width: 210px !important;
+}

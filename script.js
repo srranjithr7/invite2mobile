@@ -213,13 +213,13 @@ document.addEventListener("DOMContentLoaded", () => {
       existing.push(response);
       localStorage.setItem("weddingRsvps", JSON.stringify(existing));
 
-      if (submitBtn) { submitBtn.classList.add("loading"); submitBtn.textContent = "Submitting..."; }
+      if (submitBtn) { submitBtn.classList.add("loading"); submitBtn.textContent = "Sending..."; }
 
       setTimeout(() => {
         if (formView) formView.hidden = true;
         if (thanksView) thanksView.hidden = false;
         form.reset();
-        if (submitBtn) { submitBtn.classList.remove("loading"); submitBtn.textContent = "Submit RSVP"; }
+        if (submitBtn) { submitBtn.classList.remove("loading"); submitBtn.textContent = "Send Response"; }
       }, 650);
     });
   }

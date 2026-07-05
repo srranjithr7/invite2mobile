@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#F6EFE3" />
+  <title>Ranjith & Sonaaly Wedding Invitation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=5000" />
+</head>
+<body>
+  <div class="cover" id="cover" aria-label="Invitation cover">
+    <div class="coverCard">
+      <div class="logo" aria-label="Ranjith and Sonaaly monogram"><span>R</span><i>&</i><span>S</span></div>
+      <p class="eyebrow">Wedding Invitation</p>
+      <h1>Ranjith <span>and</span> Sonaaly</h1>
+      <p class="coverText">Click to begin</p>
+      <button class="primaryBtn" type="button" id="openInviteBtn">Open Invitation</button>
+    </div>
+  </div>
+
+  <main id="mainContent">
+    <section class="hero section" id="home">
+      <div class="heroPhoto" role="img" aria-label="Wedding photo"></div>
+      <div class="heroContent reveal">
+        <div class="logo smallLogo" aria-label="Ranjith and Sonaaly monogram"><span>R</span><i>&</i><span>S</span></div>
+        <p class="eyebrow">Together with their families</p>
+        <h2>Ranjith <span>and</span> Sonaaly</h2>
+        <p class="intro">Invite you to celebrate their wedding</p>
+      </div>
+    </section>
+
+    <section class="dateReveal section" id="reveal">
+      <div class="sectionInner reveal">
+        <p class="eyebrow">Scratch to reveal</p>
+        <h2 class="sectionTitle">Save the Date</h2>
+        <div class="scratchBox" id="designerDate">
+          <div class="dateCard">
+            <div class="month">September</div>
+            <div class="day">13</div>
+            <div class="year">2026</div>
+            <div class="time">Sunday, 10:00 AM</div>
+          </div>
+          <canvas id="scratchCanvas" aria-label="Scratch to reveal the wedding date"></canvas>
+        </div>
+        <p class="hint">Drag across the gold foil</p>
+        <button class="secondaryBtn" type="button" id="revealBtn">Reveal instantly</button>
+      </div>
+    </section>
+
+    <section class="countSection section" id="countdown">
+      <div class="sectionInner reveal">
+        <p class="eyebrow">The celebration begins in</p>
+        <h2 class="sectionTitle">Countdown</h2>
+        <div class="countdown" aria-label="Wedding countdown">
+          <div class="countItem"><strong id="days">0</strong><span>Days</span></div>
+          <div class="countItem"><strong id="hours">0</strong><span>Hours</span></div>
+          <div class="countItem"><strong id="minutes">0</strong><span>Minutes</span></div>
+          <div class="countItem"><strong id="seconds">0</strong><span>Seconds</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="events section" id="events">
+      <div class="sectionInner reveal">
+        <p class="eyebrow">Wedding Details</p>
+        <h2 class="sectionTitle">Events</h2>
+        <div class="eventGrid">
+          <article class="eventCard">
+            <h3>Wedding</h3>
+            <p><strong>Sunday, 13 September 2026</strong></p>
+            <p>10:00 AM</p>
+            <p>Dhuvathasantham Convention Centre<br />Madurai</p>
+            <a class="linkBtn" href="https://maps.app.goo.gl/kYjnUuHdCrsawFqk9" target="_blank" rel="noopener">View Location</a>
+          </article>
+          <article class="eventCard">
+            <h3>Reception</h3>
+            <p><strong>Sunday, 13 September 2026</strong></p>
+            <p>6:30 PM onwards</p>
+            <p>Dhuvathasantham Convention Centre<br />Madurai</p>
+            <a class="linkBtn" href="https://maps.app.goo.gl/kYjnUuHdCrsawFqk9" target="_blank" rel="noopener">View Location</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="venue section" id="venue">
+      <div class="venuePhoto" role="img" aria-label="Venue photo"></div>
+      <div class="venueContent reveal">
+        <p class="eyebrow">Venue</p>
+        <h2 class="sectionTitle">Dhuvathasantham<br />Convention Centre</h2>
+        <p>Madurai, Tamil Nadu</p>
+        <a class="linkBtn" href="https://maps.app.goo.gl/kYjnUuHdCrsawFqk9" target="_blank" rel="noopener">Open Map</a>
+      </div>
+    </section>
+
+    <section class="rsvp section" id="rsvp">
+      <div class="rsvpCard reveal">
+        <p class="eyebrow">Kindly Confirm</p>
+        <h2 class="sectionTitle">RSVP</h2>
+        <p>Please confirm your presence through WhatsApp.</p>
+        <a class="primaryBtn" href="https://wa.me/919585653566?text=Congratulations%20Ranjith%20and%20Sonaaly.%20I%20will%20attend%20the%20wedding." target="_blank" rel="noopener">WhatsApp RSVP</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>Ranjith Rajagopal &amp; Sonaaly Sudharsanaa</footer>
+  <script src="script.js?v=5000"></script>
+</body>
+</html>

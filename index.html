@@ -7,53 +7,51 @@
   <title>Ranjith & Sonaaly Wedding Invitation</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=5000" />
+  <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Inter:wght@300;400;500;600;700&family=Nunito+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=30040" />
 </head>
 <body>
   <div class="cover" id="cover" aria-label="Invitation cover">
+    <div class="coverGate coverGateLeft" aria-hidden="true"></div>
+    <div class="coverGate coverGateRight" aria-hidden="true"></div>
     <div class="coverCard">
       <div class="logo" aria-label="Ranjith and Sonaaly monogram"><span>R</span><i>&</i><span>S</span></div>
       <p class="eyebrow">Wedding Invitation</p>
       <h1>Ranjith <span>and</span> Sonaaly</h1>
-      <p class="coverText">Click to begin</p>
       <button class="primaryBtn" type="button" id="openInviteBtn">Open Invitation</button>
     </div>
   </div>
 
   <main id="mainContent">
     <section class="hero section" id="home">
-      <div class="heroPhoto" role="img" aria-label="Wedding photo"></div>
       <div class="heroContent reveal">
         <div class="logo smallLogo" aria-label="Ranjith and Sonaaly monogram"><span>R</span><i>&</i><span>S</span></div>
         <p class="eyebrow">Together with their families</p>
         <h2>Ranjith <span>and</span> Sonaaly</h2>
         <p class="intro">Invite you to celebrate their wedding</p>
       </div>
+      <div class="heroPhoto" role="img" aria-label="Wedding photo"></div>
     </section>
 
     <section class="dateReveal section" id="reveal">
       <div class="sectionInner reveal">
-        <p class="eyebrow">Scratch to reveal</p>
-        <h2 class="sectionTitle">Save the Date</h2>
+        <h2 class="sectionTitle dateHeadline"><strong>It’s Happening</strong><span>The beginning of forever</span></h2>
         <div class="scratchBox" id="designerDate">
           <div class="dateCard">
             <div class="month">September</div>
             <div class="day">13</div>
             <div class="year">2026</div>
-            <div class="time">Sunday, 10:00 AM</div>
+            <div class="time">Sunday</div>
           </div>
           <canvas id="scratchCanvas" aria-label="Scratch to reveal the wedding date"></canvas>
         </div>
-        <p class="hint">Drag across the gold foil</p>
-        <button class="secondaryBtn" type="button" id="revealBtn">Reveal instantly</button>
       </div>
     </section>
 
-    <section class="countSection section" id="countdown">
+    <section class="countSection section countdownPhotoBg" id="countdown">
       <div class="sectionInner reveal">
-        <p class="eyebrow">The celebration begins in</p>
-        <h2 class="sectionTitle">Countdown</h2>
+        <h2 class="sectionTitle countdownMainTitle">Countdown</h2>
+        <p class="eyebrow countdownSubTitle">The celebration begins in</p>
         <div class="countdown" aria-label="Wedding countdown">
           <div class="countItem"><strong id="days">0</strong><span>Days</span></div>
           <div class="countItem"><strong id="hours">0</strong><span>Hours</span></div>
@@ -87,7 +85,6 @@
     </section>
 
     <section class="venue section" id="venue">
-      <div class="venuePhoto" role="img" aria-label="Venue photo"></div>
       <div class="venueContent reveal">
         <p class="eyebrow">Venue</p>
         <h2 class="sectionTitle">Dhuvathasantham<br />Convention Centre</h2>
@@ -96,17 +93,54 @@
       </div>
     </section>
 
+    
     <section class="rsvp section" id="rsvp">
       <div class="rsvpCard reveal">
         <p class="eyebrow">Kindly Confirm</p>
         <h2 class="sectionTitle">RSVP</h2>
-        <p>Please confirm your presence through WhatsApp.</p>
-        <a class="primaryBtn" href="https://wa.me/919585653566?text=Congratulations%20Ranjith%20and%20Sonaaly.%20I%20will%20attend%20the%20wedding." target="_blank" rel="noopener">WhatsApp RSVP</a>
+        <p>Please confirm your presence.</p>
+        <button class="primaryBtn" type="button" id="openRsvpModal">RSVP Now</button>
       </div>
     </section>
+
+    <div class="rsvpModal" id="rsvpModal" aria-hidden="true">
+      <div class="rsvpModalBackdrop" data-close-rsvp></div>
+      <div class="rsvpModalCard" role="dialog" aria-modal="true" aria-labelledby="rsvpModalTitle">
+        <button class="rsvpClose" type="button" aria-label="Close RSVP" data-close-rsvp>&times;</button>
+
+        <div class="rsvpFormView" id="rsvpFormView">
+          <p class="eyebrow">Kindly Confirm</p>
+          <h2 id="rsvpModalTitle">RSVP</h2>
+          <form id="rsvpForm">
+            <label class="rsvpField">
+              <span>Your Name</span>
+              <input type="text" id="guestName" name="guestName" placeholder="Enter your name" required />
+            </label>
+
+            <div class="rsvpOptions" role="radiogroup" aria-label="Attendance confirmation">
+              <p>Will you be attending?</p>
+              <label><input type="radio" name="attendance" value="Yes, I'll attend" required /><span>Yes, I'll attend</span></label>
+              <label><input type="radio" name="attendance" value="No, I won't be able to attend" /><span>No, I won't be able to attend</span></label>
+              <label><input type="radio" name="attendance" value="Not sure yet" /><span>Not sure yet</span></label>
+            </div>
+
+            <button class="primaryBtn rsvpSubmit" type="submit">Submit RSVP</button>
+          </form>
+        </div>
+
+        <div class="rsvpThanksView" id="rsvpThanksView" hidden>
+          <p class="eyebrow">Thank You</p>
+          <h2>Thank You ❤️</h2>
+          <p>Your RSVP has been received.</p>
+          <p>We can't wait to celebrate our special day with you.</p>
+          <button class="primaryBtn" type="button" data-close-rsvp>Close</button>
+        </div>
+      </div>
+    </div>
+
   </main>
 
   <footer>Ranjith Rajagopal &amp; Sonaaly Sudharsanaa</footer>
-  <script src="script.js?v=5000"></script>
+  <script src="script.js?v=30040"></script>
 </body>
 </html>

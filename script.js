@@ -101,11 +101,11 @@
     const p = getPoint(e);
     ctx.globalCompositeOperation = "destination-out";
     ctx.beginPath();
-    ctx.arc(p.x, p.y, 32, 0, Math.PI * 2);
+    ctx.arc(p.x, p.y, 26, 0, Math.PI * 2);
     ctx.fill();
     if (scratchCount % 3 === 0) addSpark(p.x, p.y);
     scratchCount++;
-    if (scratchCount > 28) finishReveal();
+    if (scratchCount > 55) finishReveal();
   }
 
   function launchSparkles() {
@@ -167,3 +167,60 @@
   window.openInvite = openInvite;
   window.finishReveal = finishReveal;
 })();
+
+
+/* RSVP popup - in-page only */
+document.addEventListener("DOMContentLoaded", () => {
+  const modal = document.getElementById("rsvpModal");
+  const openBtn = document.getElementById("openRsvpModal");
+  const form = document.getElementById("rsvpForm");
+  const formView = document.getElementById("rsvpFormView");
+  const thanksView = document.getElementById("rsvpThanksView");
+
+  function openRsvp() {
+    if (!modal) return;
+    modal.classList.add("open");
+    modal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("rsvpLocked");
+    if (formView) formView.hidden = false;
+    if (thanksView) thanksView.hidden = true;
+    setTimeout(() => document.getElementById("guestName")?.focus(), 120);
+  }
+
+  function closeRsvp() {
+    if (!modal) return;
+    modal.classList.remove("open");
+    modal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("rsvpLocked");
+  }
+
+  if (openBtn) openBtn.addEventListener("click", openRsvp);
+  document.querySelectorAll("[data-close-rsvp]").forEach((item) => item.addEventListener("click", closeRsvp));
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && modal?.classList.contains("open")) closeRsvp();
+  });
+
+  if (form) {
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const submitBtn = form.querySelector(".rsvpSubmit");
+      const name = document.getElementById("guestName")?.value.trim();
+      const attendance = form.querySelector('input[name="attendance"]:checked')?.value;
+      if (!name || !attendance) return;
+
+      const response = { name, attendance, submittedAt: new Date().toISOString() };
+      const existing = JSON.parse(localStorage.getItem("weddingRsvps") || "[]");
+      existing.push(response);
+      localStorage.setItem("weddingRsvps", JSON.stringify(existing));
+
+      if (submitBtn) { submitBtn.classList.add("loading"); submitBtn.textContent = "Submitting..."; }
+
+      setTimeout(() => {
+        if (formView) formView.hidden = true;
+        if (thanksView) thanksView.hidden = false;
+        form.reset();
+        if (submitBtn) { submitBtn.classList.remove("loading"); submitBtn.textContent = "Submit RSVP"; }
+      }, 650);
+    });
+  }
+});
